@@ -1,0 +1,23 @@
+{
+  "name": "raspihats",
+  "version": "0.1.0",
+  "description": "Library for controlling Raspberry Pi add-on boards from raspihats.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raspihats/raspihats_nodejs.git"
+  },
+  "keywords": [
+    "escape",
+    "unescape",
+    "html"
+  ],
+  "author": "Florin Costa <florin.costa83@gmail.com> (http://raspihats.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raspihats/raspihats_nodejs/issues"
+  }
+}
