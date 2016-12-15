@@ -39,6 +39,14 @@ class I2cHat {
   constructor(address) {
     this.address = address;
   }
+  
+  generateRequestId() {
+    I2cHat.id = ++I2cHat.id || 0x00;
+    if(I2cHat.id > 0xFF) {
+        I2cHat.id = 0;
+    }
+    return I2cHat.id;
+  }
 
   encode(frame) {
     buffer = Buffer.from([frame.id, frame.command]);
@@ -119,22 +127,42 @@ class I2cHat {
       throw "Bad response frame Data!";
     }
   }
-
+  
+  get name() {
+    request = {
+        id : generateRequestId(),
+        command : GET_BOARD_NAME,
+    };
+    response = transfer(this.address, request, 25);
+    return response.data.toString('ascii');
+  }
+  
+  get fw_version() {
+    request = {
+        id : generateRequestId(),
+        command : GET_FIRMWARE_VERSION,
+    };
+    response = transfer(this.address, request, 3);
+    data = response.data.map(function(x){
+        return x + 0x30;
+    });
+    return "v" + String.fromCharCode(data[0]) + "." + String.fromCharCode(data[1]) + "." + String.fromCharCode(data[2]);
+  }
+  
+  get status() {
+    return getUint32Value(GET_STATUS_WORD);
+  }
+  
+  reset() {
+    request = {
+        id : generateRequestId(),
+        command : RESET,
+    };
+    response = transfer(this.address, request, 0);
+  }
+  
 }
 
-var generateRequestId = (function() {
-  var i = 0xFF;
-  return function () {
-    if(i >= 0xFF) {
-      i = 0;
-    }
-    else {
-      i++;
-    }
-    return i;
-  };
-})();
-
-
+I2cHat.Command = Command;
 
 exports.I2cHat = I2cHat;
