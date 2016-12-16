@@ -49,7 +49,8 @@ class I2cHat {
   }
 
   encode(frame) {
-    buffer = Buffer.from([frame.id, frame.command]);
+    console.log(frame);
+    var buffer = Buffer.from([frame.id, frame.command]);
     if(frame.data !== undefined) {
       buffer = Buffer.concat([buffer, frame.data]);
     }
@@ -59,33 +60,34 @@ class I2cHat {
   }
   
   decode(buffer) {
-    len = buffer.length;
-    crc = buffer[len - 2] + (buffer[len - 1] << 8);
+    var len = buffer.length;
+    var crc = buffer[len - 2] + (buffer[len - 1] << 8);
     if(crc !== crc16.modbus(buffer.slice(0, len - 2))) {
       throw "Bad CRC";
     }
-    frame = {};
-    frame.id = buffer[0];
-    frame.command = buffer[1];
-    frame.data = buffer.slice(2, len - 2);  
+    var frame = {
+      id : buffer[0],
+      command : buffer[1],
+      data : buffer.slice(2, len - 2)
+    };
     return frame;
   }
   
   transfer(request, responseLength, tries=5) {
     //try {
     
-    requestBuffer = encode(request);
-    //console.log("request: " + requestBuffer.toString('hex'));
+    var requestBuffer = this.encode(request);
+    console.log("request: " + requestBuffer.toString('hex'));
     bus.i2cWriteSync(this.address, requestBuffer.length, requestBuffer);
     
     if(responseLength === 0) {
       return;
     }
     
-    responseBuffer = new Buffer(FRAME_ID_SIZE + FRAME_CMD_SIZE + responseLength + FRAME_CRC_SIZE);
+    var responseBuffer = new Buffer(FRAME_ID_SIZE + FRAME_CMD_SIZE + responseLength + FRAME_CRC_SIZE);
     bus.i2cReadSync(this.address, responseBuffer.length, responseBuffer);
-    //console.log("response: " + responseBuffer.toString('hex'));
-    response = decode(responseBuffer);
+    console.log("response: " + responseBuffer.toString('hex'));
+    var response = this.decode(responseBuffer);
     
     if(request.id !== response.id) {
       throw "Bad response frame Id!";
@@ -104,11 +106,12 @@ class I2cHat {
   }
   
   getUint32Value(command) {
-    request = {};
-    request.id = generateRequestId();
-    request.command = command;
+    var request = {
+      id : generateRequestId(),
+      command : command
+    };
   
-    response = transfer(this.address, request, 4);
+    var response = transfer(request, 4);
     if(response.data.length != 4) {
       throw "Bad response frame length";
     }
@@ -116,49 +119,51 @@ class I2cHat {
   }
   
   setUint32Value(command, value) {
-    request = {};
-    request.id = generateRequestId();
-    request.command = command;
-    request.data = Buffer.alloc(4);
+    var request = {
+      id : this.generateRequestId(),
+      command : command,
+      data : Buffer.alloc(4)
+    };
+
     request.data.writeUInt32LE(value, 0);
     
-    response = transfer(this.address, request, 4);
+    var response = this.transfer(request, 4);
     if(!request.data.equals(response.data)) {
       throw "Bad response frame Data!";
     }
   }
   
   get name() {
-    request = {
-        id : generateRequestId(),
-        command : GET_BOARD_NAME,
+    var request = {
+        id : this.generateRequestId(),
+        command : Command.GET_BOARD_NAME,
     };
-    response = transfer(this.address, request, 25);
+    var response = this.transfer(request, 25);
     return response.data.toString('ascii');
   }
   
   get fw_version() {
-    request = {
-        id : generateRequestId(),
-        command : GET_FIRMWARE_VERSION,
+    var request = {
+        id : this.generateRequestId(),
+        command : Command.GET_FIRMWARE_VERSION,
     };
-    response = transfer(this.address, request, 3);
-    data = response.data.map(function(x){
+    var response = this.transfer(request, 3);
+    var data = response.data.map(function(x){
         return x + 0x30;
     });
     return "v" + String.fromCharCode(data[0]) + "." + String.fromCharCode(data[1]) + "." + String.fromCharCode(data[2]);
   }
   
   get status() {
-    return getUint32Value(GET_STATUS_WORD);
+    return getUint32Value(Command.GET_STATUS_WORD);
   }
   
   reset() {
-    request = {
-        id : generateRequestId(),
-        command : RESET,
+    var request = {
+        id : this.generateRequestId(),
+        command : Command.RESET,
     };
-    response = transfer(this.address, request, 0);
+    this.transfer(request, 0);
   }
   
 }

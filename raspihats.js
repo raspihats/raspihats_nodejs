@@ -1,5 +1,3 @@
-var i2cHats = {};
-
-i2cHats.digitalOutputs = require('./i2chats/digital_outputs');
+var i2cHats = require('./i2c_hats/boards');
 
 exports.i2cHats = i2cHats;

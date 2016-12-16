@@ -19,5 +19,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/raspihats/raspihats_nodejs/issues"
+  },
+  "dependencies": {
+    "i2c-bus": "^1.1.2"
   }
 }

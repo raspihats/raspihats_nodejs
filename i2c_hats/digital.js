@@ -1,10 +1,12 @@
-class DigitalOutputs {
+var I2cHat = require('./base').I2cHat;
+
+class Outputs {
   constructor(i2cHat) {
     this.i2cHat = i2cHat;
   }
   
   setValue(value) {
-    this.i2cHat.setUint32Value(this.i2cHat.Command.DO_SET_ALL_CHANNEL_STATES, value);
+    this.i2cHat.setUint32Value(I2cHat.Command.DO_SET_ALL_CHANNEL_STATES, value);
   }
   
   getValue() {
@@ -53,7 +55,7 @@ class DigitalOutputs {
   
 }
 
-class DigitalInputs {
+class Inputs {
   constructor(i2cHat) {
     this.i2cHat = i2cHat;
   }
@@ -76,5 +78,5 @@ class DigitalInputs {
   
 }
 
-exports.DigitalOutputs = DigitalOutputs;
-exports.DigitalInputs = DigitalInputs;
+exports.Outputs = Outputs;
+exports.Inputs = Inputs;
