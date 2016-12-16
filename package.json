@@ -11,9 +11,10 @@
     "url": "https://github.com/raspihats/raspihats_nodejs.git"
   },
   "keywords": [
-    "escape",
-    "unescape",
-    "html"
+    "raspihats",
+    "boards",
+    "raspberry",
+    "pi"
   ],
   "author": "Florin Costa <florin.costa83@gmail.com> (http://raspihats.com/)",
   "license": "MIT",

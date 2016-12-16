@@ -49,7 +49,6 @@ class I2cHat {
   }
 
   encode(frame) {
-    console.log(frame);
     var buffer = Buffer.from([frame.id, frame.command]);
     if(frame.data !== undefined) {
       buffer = Buffer.concat([buffer, frame.data]);
@@ -77,7 +76,7 @@ class I2cHat {
     //try {
     
     var requestBuffer = this.encode(request);
-    console.log("request: " + requestBuffer.toString('hex'));
+    //console.log("request: " + requestBuffer.toString('hex'));
     bus.i2cWriteSync(this.address, requestBuffer.length, requestBuffer);
     
     if(responseLength === 0) {
@@ -86,7 +85,7 @@ class I2cHat {
     
     var responseBuffer = new Buffer(FRAME_ID_SIZE + FRAME_CMD_SIZE + responseLength + FRAME_CRC_SIZE);
     bus.i2cReadSync(this.address, responseBuffer.length, responseBuffer);
-    console.log("response: " + responseBuffer.toString('hex'));
+    //console.log("response: " + responseBuffer.toString('hex'));
     var response = this.decode(responseBuffer);
     
     if(request.id !== response.id) {
@@ -107,11 +106,11 @@ class I2cHat {
   
   getUint32Value(command) {
     var request = {
-      id : generateRequestId(),
+      id : this.generateRequestId(),
       command : command
     };
   
-    var response = transfer(request, 4);
+    var response = this.transfer(request, 4);
     if(response.data.length != 4) {
       throw "Bad response frame length";
     }
@@ -133,7 +132,7 @@ class I2cHat {
     }
   }
   
-  get name() {
+  getName() {
     var request = {
         id : this.generateRequestId(),
         command : Command.GET_BOARD_NAME,
@@ -142,7 +141,7 @@ class I2cHat {
     return response.data.toString('ascii');
   }
   
-  get fw_version() {
+  getFirmwareVersion() {
     var request = {
         id : this.generateRequestId(),
         command : Command.GET_FIRMWARE_VERSION,
@@ -154,8 +153,8 @@ class I2cHat {
     return "v" + String.fromCharCode(data[0]) + "." + String.fromCharCode(data[1]) + "." + String.fromCharCode(data[2]);
   }
   
-  get status() {
-    return getUint32Value(Command.GET_STATUS_WORD);
+  getStatus() {
+    return this.getUint32Value(Command.GET_STATUS_WORD);
   }
   
   reset() {
