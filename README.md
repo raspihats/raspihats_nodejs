@@ -1,6 +1,6 @@
 # Raspihats
 
-Node.js package for interfacing Raspberry Pi add-on boards located at [raspihats.com]http://raspihats.com/
+Node.js package for interfacing Raspberry Pi add-on boards located at [raspihats.com](http://raspihats.com/)
 
 ## Installation
 
@@ -31,10 +31,6 @@ b.DQ.setChannel(0, true);   // write single digital output channel
 b.DQ.getValue();            // read all digital output channels
 b.DQ.getChannel(0);         // read single digital output channel
 ```
-
-## Tests
-
-  npm test
 
 ## Release History
 
