@@ -15,7 +15,6 @@ var Command = {
     // Communication WatchDog commands
     CWDT_SET_PERIOD           : 0x14,
     CWDT_GET_PERIOD           : 0x15,
-    CWDT_SET_STATE            : 0x16,
   
     // Digital Inputs commands
     DI_GET_ALL_CHANNEL_STATES : 0x20,
@@ -166,7 +165,21 @@ class I2cHat {
   }
   
 }
-
 I2cHat.Command = Command;
 
+class Cwdt {
+  constructor(i2cHat) {
+    this.i2cHat = i2cHat;
+  }
+  
+  getPeriod() {
+    return this.i2cHat.getUint32Value(I2cHat.Command.CWDT_GET_PERIOD) / 1000;
+  }
+  
+  setPeriod(value) {
+    return this.i2cHat.setUint32Value(I2cHat.Command.CWDT_SET_PERIOD, Math.round(value * 1000));
+  }
+}
+
 exports.I2cHat = I2cHat;
+exports.Cwdt = Cwdt;

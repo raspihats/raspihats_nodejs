@@ -1,9 +1,12 @@
-var I2cHat = require('./base').I2cHat;
+var base = require('./base');
+var I2cHat = base.I2cHat;
+var Cwdt = base.Cwdt;
 var digital = require('./digital');
 
 class Di16 extends I2cHat {
   constructor(address) {
     super(address);
+    this.cwdt = new Cwdt(this);
     this.digitalInputs = new digital.Inputs(this);
     this.DI = this.digitalInputs;
   }
@@ -12,6 +15,7 @@ class Di16 extends I2cHat {
 class Rly10 extends I2cHat {
   constructor(address) {
     super(address);
+    this.cwdt = new Cwdt(this);
     this.digitalOutputs = new digital.Outputs(this);
     this.DQ = this.digitalOutputs;
   }
@@ -20,6 +24,7 @@ class Rly10 extends I2cHat {
 class Di6Rly6 extends I2cHat {
   constructor(address) {
     super(address);
+    this.cwdt = new Cwdt(this);
     this.digitalInputs = new digital.Inputs(this);
     this.DI = this.digitalInputs;
     this.digitalOutputs = new digital.Outputs(this);
@@ -30,6 +35,7 @@ class Di6Rly6 extends I2cHat {
 class DI16ac extends I2cHat {
   constructor(address) {
     super(address);
+    this.cwdt = new Cwdt(this);
     this.digitalInputs = new digital.Inputs(this);
     this.DI = this.digitalInputs;
   }
@@ -38,6 +44,7 @@ class DI16ac extends I2cHat {
 class DQ10rly extends I2cHat {
   constructor(address) {
     super(address);
+    this.cwdt = new Cwdt(this);
     this.digitalOutputs = new digital.Outputs(this);
     this.DQ = this.digitalOutputs;
   }
@@ -46,6 +53,7 @@ class DQ10rly extends I2cHat {
 class DQ16oc extends I2cHat {
   constructor(address) {
     super(address);
+    this.cwdt = new Cwdt(this);
     this.digitalOutputs = new digital.Outputs(this);
     this.DQ = this.digitalOutputs;
   }
@@ -54,6 +62,7 @@ class DQ16oc extends I2cHat {
 class DI6acDQ6rly extends I2cHat {
   constructor(address) {
     super(address);
+    this.cwdt = new Cwdt(this);
     this.digitalInputs = new digital.Inputs(this);
     this.DI = this.digitalInputs;
     this.digitalOutputs = new digital.Outputs(this);

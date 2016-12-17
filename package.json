@@ -4,7 +4,8 @@
   "description": "Library for controlling Raspberry Pi add-on boards from raspihats.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "i2c_clks_timeout": "python scripts/clk_stretch_timeout.py"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
     "raspberry",
     "pi"
   ],
-  "author": "Florin Costa <florin.costa83@gmail.com> (http://raspihats.com/)",
+  "author": "Florin C. <hardhat@raspihats.com> (http://raspihats.com/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/raspihats/raspihats_nodejs/issues"

@@ -1,10 +1,18 @@
-# Raspihats
+# raspihats
 
 Node.js package for interfacing Raspberry Pi add-on boards located at [raspihats.com](http://raspihats.com/)
 
 ## Installation
-
-  npm install raspihats --save
+  ```sh
+  $ npm install raspihats --save
+  ```
+  
+### I2C clock stretch timeout
+  It's important for the I2C clock stretch timeout to have the right value before issuing requests to a I2C-HAT, run the following command to set the right clock stretch timeout:
+  
+  ```sh
+  $ sudo npm run i2c_clks_timeout
+  ```
 
 ## I2C-HAT usage example
 
@@ -34,4 +42,15 @@ b.DQ.getChannel(0);         // read single digital output channel
 
 ## Release History
 
-* 0.1.0 Initial release
+* 0.1.0 Initial release, supported boards:
+[Di16 I2C-HAT](http://raspihats.com/product/di16/)
+[Rly10 I2C-HAT](http://raspihats.com/product/rly10/)
+[Di6Rly6 I2C-HAT](http://raspihats.com/product/di6rly6/)
+[DI16ac I2C-HAT](http://raspihats.com/product/di16ac/)
+[DQ10rly I2C-HAT](http://raspihats.com/product/dq10rly/)
+[DQ10oc I2C-HAT](http://raspihats.com/product/dq10oc/)
+[DI6acDQ6rly I2C-HAT](http://raspihats.com/product/di6acdq6rly/)
+
+## License
+
+MIT
