@@ -47,7 +47,7 @@ b.DQ.getChannel(0);         // read single digital output channel
   Supported functionality:
   * Basic(read board name, read firmware version, read status word, reset)
   * Communication WatchDog(read/write period)
-  * Digital Inputs(read value, read channel)
+  * Digital Inputs(read value, read channel, read channel counter, reset channel counter)
   * Digital Outputs(read/write value, read/write channel, read/write PowerOnValue, read/write SafetyValue)
   
   Supported boards:
