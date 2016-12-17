@@ -42,14 +42,22 @@ b.DQ.getChannel(0);         // read single digital output channel
 
 ## Release History
 
-* 0.1.0 Initial release, supported boards:
-[Di16 I2C-HAT](http://raspihats.com/product/di16/)
-[Rly10 I2C-HAT](http://raspihats.com/product/rly10/)
-[Di6Rly6 I2C-HAT](http://raspihats.com/product/di6rly6/)
-[DI16ac I2C-HAT](http://raspihats.com/product/di16ac/)
-[DQ10rly I2C-HAT](http://raspihats.com/product/dq10rly/)
-[DQ10oc I2C-HAT](http://raspihats.com/product/dq10oc/)
-[DI6acDQ6rly I2C-HAT](http://raspihats.com/product/di6acdq6rly/)
+* **0.1.0** Initial release
+
+  Supported functionality:
+  * Basic(read board name, read firmware version, read status word, reset)
+  * Communication WatchDog(read/write period)
+  * Digital Inputs(read value, read channel)
+  * Digital Outputs(read/write value, read/write channel, read/write PowerOnValue, read/write SafetyValue)
+  
+  Supported boards:
+  * [Di16 I2C-HAT](http://raspihats.com/product/di16/)
+  * [Rly10 I2C-HAT](http://raspihats.com/product/rly10/)
+  * [Di6Rly6 I2C-HAT](http://raspihats.com/product/di6rly6/)
+  * [DI16ac I2C-HAT](http://raspihats.com/product/di16ac/)
+  * [DQ10rly I2C-HAT](http://raspihats.com/product/dq10rly/)
+  * [DQ10oc I2C-HAT](http://raspihats.com/product/dq10oc/)
+  * [DI6acDQ6rly I2C-HAT](http://raspihats.com/product/di6acdq6rly/)
 
 ## License
 
