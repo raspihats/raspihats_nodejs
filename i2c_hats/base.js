@@ -35,8 +35,12 @@ var Command = {
 };
 
 class I2cHat {
-  constructor(address) {
+  constructor(address, name) {
     this.address = address;
+    this.name = name;
+    if(this.getName() !== this.name) {
+      throw "Expecting '" + this.name + "' at I2C address: "+ this.address + " but got '" + this.getName() + " ' !";
+    }
   }
   
   generateRequestId() {
@@ -72,35 +76,37 @@ class I2cHat {
   }
   
   transfer(request, responseLength, tries=5) {
-    //try {
+    var tryCnt = 0;
+    var error;
     
-    var requestBuffer = this.encode(request);
-    //console.log("request: " + requestBuffer.toString('hex'));
-    bus.i2cWriteSync(this.address, requestBuffer.length, requestBuffer);
-    
-    if(responseLength === 0) {
-      return;
+    while(tryCnt < tries) {
+      try {
+        var requestBuffer = this.encode(request);
+        bus.i2cWriteSync(this.address, requestBuffer.length, requestBuffer);
+        
+        if(responseLength < 0) {
+          return;
+        }
+        
+        var responseBuffer = new Buffer(FRAME_ID_SIZE + FRAME_CMD_SIZE + responseLength + FRAME_CRC_SIZE);
+        bus.i2cReadSync(this.address, responseBuffer.length, responseBuffer);
+        var response = this.decode(responseBuffer);
+        
+        if(request.id !== response.id) {
+          throw "Bad response frame Id!";
+        }
+        if(request.command !== response.command) {
+          throw "Bad response frame Command!";
+        }
+        
+        return response;
+      }
+      catch(err) {
+        tryCnt++;
+        error = err;
+      }
     }
-    
-    var responseBuffer = new Buffer(FRAME_ID_SIZE + FRAME_CMD_SIZE + responseLength + FRAME_CRC_SIZE);
-    bus.i2cReadSync(this.address, responseBuffer.length, responseBuffer);
-    //console.log("response: " + responseBuffer.toString('hex'));
-    var response = this.decode(responseBuffer);
-    
-    if(request.id !== response.id) {
-      throw "Bad response frame Id!";
-    }
-    
-    if(request.command !== response.command) {
-      throw "Bad response frame Command!";
-    }
-    
-    return response;
-    
-    //}
-    //catch(err) {
-    //
-    //}
+    throw error;
   }
   
   getUint32Value(command) {
@@ -137,7 +143,13 @@ class I2cHat {
         command : Command.GET_BOARD_NAME,
     };
     var response = this.transfer(request, 25);
-    return response.data.toString('ascii');
+    var i = response.data.indexOf(0);
+    if(i != -1) {
+      return response.data.slice(0, i).toString('ascii');
+    }
+    else {
+      return response.data.toString('ascii');
+    }
   }
   
   getFirmwareVersion() {
@@ -161,7 +173,7 @@ class I2cHat {
         id : this.generateRequestId(),
         command : Command.RESET,
     };
-    this.transfer(request, 0);
+    this.transfer(request, -1);
   }
   
 }
