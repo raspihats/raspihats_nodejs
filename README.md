@@ -8,7 +8,7 @@ Node.js package for interfacing Raspberry Pi add-on boards located at [raspihats
   ```
   
 ### I2C clock stretch timeout
-  It's important for the I2C clock stretch timeout to have the right value before issuing requests to a I2C-HAT, run the following command to set the right clock stretch timeout:
+  It's important for the I2C clock stretch timeout to have the right value before issuing requests to a I2C-HAT, cd to 'node_modules/raspihats' and run the following command to set the right clock stretch timeout:
   
   ```sh
   $ sudo npm run i2c_clks_timeout
@@ -42,7 +42,7 @@ b.DQ.getChannel(0);         // read single digital output channel
 
 ## Release History
 
-* **0.1.0** Initial release
+* **1.0.0** Initial release
 
   Supported functionality:
   * Basic(read board name, read firmware version, read status word, reset)
