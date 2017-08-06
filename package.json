@@ -1,6 +1,6 @@
 {
   "name": "raspihats",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Library for controlling Raspberry Pi add-on boards from raspihats.com",
   "main": "index.js",
   "scripts": {

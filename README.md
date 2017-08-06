@@ -25,7 +25,7 @@ var b = new DI6acDQ6rly(0x60);
 // All the following methods will issue a request and get a response from the board over the I2C bus.
 b.getName();                // reads board name
 b.getFirmwareVersion();     // reads firmware version
-b.reset();                  // resets the board, wait at least 1ms after reset before issuing another request
+//b.reset();                  // resets the board, wait at least 1ms after reset before issuing another request
 b.getStatus();              // reads status word, bits [0: power on reset, 1: software reset, 2: watchdog reset]
 
 // Digital Inputs
@@ -56,8 +56,13 @@ b.DQ.getChannel(0);         // read single digital output channel
   * [Di6Rly6 I2C-HAT](http://raspihats.com/product/di6rly6/)
   * [DI16ac I2C-HAT](http://raspihats.com/product/di16ac/)
   * [DQ10rly I2C-HAT](http://raspihats.com/product/dq10rly/)
-  * [DQ10oc I2C-HAT](http://raspihats.com/product/dq10oc/)
+  * [DQ16oc I2C-HAT](http://raspihats.com/product/dq16oc/)
   * [DI6acDQ6rly I2C-HAT](http://raspihats.com/product/di6acdq6rly/)
+
+* **1.1.0** Added DQ8rly
+  
+  Added boards:
+  * [DQ8rly I2C-HAT](http://raspihats.com/product/dq8rly/)
 
 ## License
 

@@ -41,6 +41,15 @@ class DI16ac extends I2cHat {
   }
 }
 
+class DQ8rly extends I2cHat {
+  constructor(address) {
+    super(address, "DQ8rly I2C-HAT");
+    this.cwdt = new Cwdt(this);
+    this.digitalOutputs = new digital.Outputs(this, ["Q0", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"]);
+    this.DQ = this.digitalOutputs;
+  }
+}
+
 class DQ10rly extends I2cHat {
   constructor(address) {
     super(address, "DQ10rly I2C-HAT");
@@ -75,6 +84,7 @@ exports.Di16 = Di16;
 exports.Rly10 = Rly10;
 exports.Di6Rly6 = Di6Rly6;
 exports.DI16ac = DI16ac;
+exports.DQ8rly = DQ8rly;
 exports.DQ10rly = DQ10rly;
 exports.DQ16oc = DQ16oc;
 exports.DI6acDQ6rly = DI6acDQ6rly;
