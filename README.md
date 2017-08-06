@@ -64,6 +64,10 @@ b.DQ.getChannel(0);         // read single digital output channel
   Added boards:
   * [DQ8rly I2C-HAT](http://raspihats.com/product/dq8rly/)
 
+* **1.1.1** Small fix
+  
+  Modified exception message thrown if an unexpected board is found at the desired address.
+
 ## License
 
 MIT

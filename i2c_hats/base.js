@@ -39,7 +39,7 @@ class I2cHat {
     this.address = address;
     this.name = name;
     if(this.getName() !== this.name) {
-      throw "Expecting '" + this.name + "' at I2C address: "+ this.address + " but got '" + this.getName() + " ' !";
+      throw "Expecting '" + this.name + "' @ 0x"+ this.address.toString(16) + " but got '" + this.getName() + "' !";
     }
   }
   
