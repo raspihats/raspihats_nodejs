@@ -68,6 +68,10 @@ b.DQ.getChannel(0);         // read single digital output channel
   
   Modified exception message thrown if an unexpected board is found at the desired address.
 
+* **1.1.2** Updated i2c-bus dependency version and small fix
+  
+  Now using i2c-bus@5.2.0, and using Buffer.alloc instead of new Buffer.
+
 ## License
 
 MIT
